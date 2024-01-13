@@ -10,37 +10,36 @@
 <body>
     <main id="main">
         <form id="vtuberForm">
-            <input type="file" name="photo" id="inputPhoto">
-            <span>Licencja Vtuberska</span><br>
+            <input type="file" name="photo" id="inputPhoto" accept="image/*"><br>
             <label for="name">Nazwa:</label>
             <input type="text" name="name" id="inputName"><br>
             <label for="channel">Nazwa kanału:</label>
             <input type="text" name="channel" id="inputChannel"><br>
             <label for="debiut">Data debiutu:</label>
             <input type="date" name="debiut" id="inputDebiut"><br>
-            <label for="vtuber">Vtuber</label>
-            <input type="radio" name="vtuber" id="inputVtuber"><br>
-            <label for="hybryda">Hybryda</label>
-            <input type="radio" name="hybryda" id="inputHybryda"><br>
+            <select name="type" id="inputType">
+                <option value="Vtuber">Vtuber</option>
+                <option value="Hybryda">Hybryda</option>
+            </select><br>
             <label for="color">Color paska:</label>
             <input type="color" name="color" id="inputColor"><br>
             <span>Platforma:</span>
-            <input type="radio" name="platform" id="inputTwitch">
-            <input type="radio" name="platform" id="inputYoutube">
-            <input type="radio" name="platform" id="inputOtherPlat"><br>
+            <input type="checkbox" name="twitch" id="inputTwitch">
+            <input type="checkbox" name="youtube" id="inputYoutube">
+            <input type="checkbox" name="otherP" id="inputOtherPlat"><br>
             <span>Język:</span>
-            <input type="radio" name="lang" id="inputPl">
-            <input type="radio" name="lang" id="inputEn">
-            <input type="radio" name="lang" id="inputOtherLang"><br>
+            <input type="checkbox" name="pol" id="inputPl">
+            <input type="checkbox" name="eng" id="inputEn">
+            <input type="checkbox" name="otherL" id="inputOtherLang"><br>
             <span>Content:</span>
-            <input type="radio" name="content" id="inputSfw">
-            <input type="radio" name="content" id="inputNsfw">
-            <input type="radio" name="content" id="inputOtherCont"><br>
+            <input type="checkbox" name="sfw" id="inputSfw">
+            <input type="checkbox" name="nsfw" id="inputNsfw">
+            <input type="checkbox" name="otherC" id="inputOtherCont"><br>
             <input type="submit" value="Jazda!">
             <!--nienawidzę kurwa formów-->
         </form>
         <canvas id="canvas" width="1500" height="500"></canvas>
     </main>
-    <footer>echn</footer>
+    <footer>v0.1 echn</footer>
 </body>
 </html>
