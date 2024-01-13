@@ -18,7 +18,6 @@ function insertToCanvas(context, color, img) {
         context.drawImage(imgOb, 507, 29);
     }
     
-    
     //kolorowy pasek
     context.fillStyle = color;
     context.rect(478, 245, 915, 23);
