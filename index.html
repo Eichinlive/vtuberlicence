@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+    <title>Kreator licencji VTubera!</title>
+</head>
+<body>
+    <main id="main">
+        <form id="vtuberForm">
+            <input type="file" name="photo" id="inputPhoto">
+            <span>Licencja Vtuberska</span><br>
+            <label for="name">Nazwa:</label>
+            <input type="text" name="name" id="inputName"><br>
+            <label for="channel">Nazwa kanału:</label>
+            <input type="text" name="channel" id="inputChannel"><br>
+            <label for="debiut">Data debiutu:</label>
+            <input type="date" name="debiut" id="inputDebiut"><br>
+            <label for="vtuber">Vtuber</label>
+            <input type="radio" name="vtuber" id="inputVtuber"><br>
+            <label for="hybryda">Hybryda</label>
+            <input type="radio" name="hybryda" id="inputHybryda"><br>
+            <label for="color">Color paska:</label>
+            <input type="color" name="color" id="inputColor"><br>
+            <span>Platforma:</span>
+            <input type="radio" name="platform" id="inputTwitch">
+            <input type="radio" name="platform" id="inputYoutube">
+            <input type="radio" name="platform" id="inputOtherPlat"><br>
+            <span>Język:</span>
+            <input type="radio" name="lang" id="inputPl">
+            <input type="radio" name="lang" id="inputEn">
+            <input type="radio" name="lang" id="inputOtherLang"><br>
+            <span>Content:</span>
+            <input type="radio" name="content" id="inputSfw">
+            <input type="radio" name="content" id="inputNsfw">
+            <input type="radio" name="content" id="inputOtherCont"><br>
+            <input type="submit" value="Jazda!">
+            <!--nienawidzę kurwa formów-->
+        </form>
+        <canvas id="canvas" width="1500" height="500"></canvas>
+    </main>
+    <footer>echn</footer>
+</body>
+</html>
