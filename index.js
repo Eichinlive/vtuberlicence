@@ -2,9 +2,9 @@ function insertToCanvas(context, arr, img) {
 
     context.lineWidth = 4;
     context.font = "38px Arial"
-    context.fillText(arr[1].value, 781, 141);
-    context.fillText(arr[2].value, 877, 175);
-    context.fillText(arr[3].value, 863, 210);
+    context.fillText(arr[1].value.trim(), 781, 141, 394);
+    context.fillText(arr[2].value.trim(), 877, 175, 298);
+    context.fillText(arr[3].value.trim(), 863, 210, 312);
 
     // PLATFORMA
 
@@ -28,7 +28,7 @@ function insertToCanvas(context, arr, img) {
         context.lineTo(765, 319);
         context.stroke();        
     }
-    if(arr[7].checked) {
+    if(arr[7].value.trim() != "") {
         context.beginPath();
         context.moveTo(859, 285);
         context.lineTo(893, 319);
@@ -36,7 +36,10 @@ function insertToCanvas(context, arr, img) {
         context.beginPath();
         context.moveTo(893, 285);
         context.lineTo(859, 319);
-        context.stroke();    
+        context.stroke();
+
+        context.font = "24px Arial";
+        context.fillText(arr[7].value.trim(), 849, 345, 59);
     }
     
     // JĘZYK
@@ -61,7 +64,7 @@ function insertToCanvas(context, arr, img) {
         context.lineTo(765, 408);
         context.stroke(); 
     }
-    if(arr[10].checked) {
+    if(arr[10].value.trim() != "") {
         context.beginPath();
         context.moveTo(859, 374);
         context.lineTo(893, 408);
@@ -69,7 +72,10 @@ function insertToCanvas(context, arr, img) {
         context.beginPath();
         context.moveTo(893, 374);
         context.lineTo(859, 408);
-        context.stroke(); 
+        context.stroke();
+
+        context.font = "24px Arial";
+        context.fillText(arr[10].value.trim().toUpperCase(), 849, 435, 59);
     }
 
     // CONTENT
@@ -94,7 +100,7 @@ function insertToCanvas(context, arr, img) {
         context.lineTo(1219, 319);
         context.stroke();
     }
-    if(arr[13].checked) {
+    if(arr[13].value.trim() != "") {
         context.beginPath();
         context.moveTo(1312, 285);
         context.lineTo(1346, 319);
@@ -103,6 +109,9 @@ function insertToCanvas(context, arr, img) {
         context.moveTo(1346, 285);
         context.lineTo(1312, 319);
         context.stroke();
+
+        context.font = "24px Arial";
+        context.fillText(arr[13].value.trim().toUpperCase(), 1302, 345, 59);
     }
 
     // TYP STREAMERA

@@ -1,10 +1,40 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
+    overflow-x: hidden;
 }
 body {
     padding: 0;
     margin: 0;
+}
+.instruction {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 200px;
+}
+.instruction > span {
+    display: block;
+    width: 100%;
+    text-align: center;   
+}
+.instruction > ol {
+    list-style-type:decimal;
+}
+main {
+    width: 900px;
+    margin: 5% auto;
+    padding: 2%;
+}
+form {
+    width: 50%;
+}
+input {
+    margin: 5px;
+}
+canvas {
+    position: relative;
+    left: -478px;
 }
 footer {
     text-align: center;
