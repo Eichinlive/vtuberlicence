@@ -148,7 +148,7 @@ function insertToCanvas(context, arr, img) {
         let imgX = imgOb.width;
         let imgY = imgOb.height;
         let ratio = imgX / imgY;
-        context.drawImage(imgOb, 507, 29, 168*ratio, 202);
+        context.drawImage(imgOb, 507, 29, 168, 202);
     }
     
     // KOLOROWY PASEK
