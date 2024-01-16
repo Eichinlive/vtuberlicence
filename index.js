@@ -1,3 +1,90 @@
+let startingPoint =[];
+let endingPoint = [];
+
+function cropImage(img) {
+    
+    const parent = document.querySelector("main");
+    let imgUrl = URL.createObjectURL(img.target.files[0]);
+    let oldImg = new Image();
+    oldImg.src = imgUrl;
+    oldImg.setAttribute("class", "imageToCrop")
+    let container = document.createElement("div");
+    container.setAttribute("class", "cropImageDiv");
+    alert("kliknij na obrazek raz w miejscu gdzie chcesz zacząć obrys, jeżdżąc myszą góra-dół zmieniasz rozmiar obrysu, drugie kliknięcie zatwierdza, w razie niepowodzenia odśwież stronę, (tak wiem że działa wolno, to jest głupia strona, nie da się szybko)");
+    container.append(oldImg);
+    parent.append(container);
+
+    oldImg.addEventListener("click", function(e) {
+
+        let imgRect = this.getBoundingClientRect();
+        let imgX = Math.floor(imgRect.left);
+        let imgY = Math.floor(imgRect.top);
+        let mouseX = Math.floor(e.clientX);
+        let mouseY = Math.floor(e.clientY);
+        let div = document.createElement("div");
+        let frameW = 168;
+        let frameH = 202;
+        
+
+        function createFrame(event) {
+
+            
+            if (event.clientY > endingPoint[1]) {
+
+                frameW+=1*(frameW/frameH);
+                frameH++;
+                div.style.width = `${frameW}px`
+                div.style.height = `${frameH}px`
+
+                endingPoint[0] = Math.floor(event.clientX);
+                endingPoint[1] = Math.floor(event.clientY);
+            }
+            else {
+
+                frameW-=1*(frameW/frameH);
+                frameH--;
+                div.style.width = `${frameW}px`
+                div.style.height = `${frameH}px`
+
+                endingPoint[0] = event.clientX;
+                endingPoint[1] = event.clientY;
+            }
+
+            parent.addEventListener("click", function() {
+
+
+                container.removeEventListener("pointermove", createFrame);
+                endingPoint[0] = div.style.width.replace("px", "")
+                endingPoint[1] = div.style.height.replace("px", "")
+                container.remove();
+                
+            });
+           
+        }
+
+        if (startingPoint.length == 0) {
+
+            startingPoint[0] = mouseX;
+            startingPoint[1] = mouseY;
+            startingPoint[2] = imgX;
+            startingPoint[3] = imgY;
+
+            endingPoint = [startingPoint];
+            
+
+            
+            div.setAttribute("class", "frame");
+            div.style.left = `${mouseX}px`;
+            div.style.top = `${mouseY}px`;
+            div.style.width = `${frameW}px`
+            div.style.height = `${frameH}px`
+            container.append(div)
+
+            container.addEventListener("pointermove", createFrame)
+        }
+    });
+}
+
 function insertToCanvas(context, arr, img) {
 
     context.lineWidth = 4;
@@ -147,9 +234,7 @@ function insertToCanvas(context, arr, img) {
         
         let imgX = imgOb.width;
         let imgY = imgOb.height;
-        context.drawImage(imgOb, 507, 29, 168, 202);
-
-        cropImage(img);
+        context.drawImage(imgOb, startingPoint[0], startingPoint[1], endingPoint[0], endingPoint[1], 507, 29, 168, 202);
     }
     
     // KOLOROWY PASEK
@@ -160,8 +245,9 @@ function insertToCanvas(context, arr, img) {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    const form = document.querySelector("#vtuberForm");
     let formData;
+    const form = document.querySelector("#vtuberForm");
+    const inputPhoto = document.querySelector("#inputPhoto");
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext("2d");
     const bgImg = new Image(1500, 500);
@@ -169,7 +255,6 @@ document.addEventListener("DOMContentLoaded", function() {
     bgImg.onload = function() {
         ctx.drawImage(bgImg, 0, 0);
     }
-    
     
     form.addEventListener("submit", function(event) {
         
@@ -184,6 +269,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         insertToCanvas(ctx, formValues, image);
     });
+
+    inputPhoto.addEventListener("change", cropImage)
 
     let footerDate = new Date;
     let footer = document.querySelector("footer");
