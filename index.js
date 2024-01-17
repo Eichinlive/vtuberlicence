@@ -28,34 +28,21 @@ function cropImage(img) {
 
         function createFrame(event) {
 
+            let frameRect = div.getBoundingClientRect();
+            div.style.width = `${Math.abs(startingPoint[1]-event.clientY)*(frameW/frameH)}px`;
+            div.style.height = `${Math.abs(startingPoint[1]-event.clientY)}px`;
             
-            if (event.clientY > endingPoint[1]) {
+            console.log(frameRect.width, frameRect.height);
 
-                frameW+=1*(frameW/frameH);
-                frameH++;
-                div.style.width = `${frameW}px`
-                div.style.height = `${frameH}px`
-
-                endingPoint[0] = Math.floor(event.clientX);
-                endingPoint[1] = Math.floor(event.clientY);
-            }
-            else {
-
-                frameW-=1*(frameW/frameH);
-                frameH--;
-                div.style.width = `${frameW}px`
-                div.style.height = `${frameH}px`
-
-                endingPoint[0] = event.clientX;
-                endingPoint[1] = event.clientY;
-            }
+            endingPoint[0] = Math.floor(event.clientX);
+            endingPoint[1] = Math.floor(event.clientY);
 
             parent.addEventListener("click", function() {
 
 
                 container.removeEventListener("pointermove", createFrame);
-                endingPoint[0] = div.style.width.replace("px", "")
-                endingPoint[1] = div.style.height.replace("px", "")
+                endingPoint[0] = Math.floor(frameRect.width);
+                endingPoint[1] = Math.floor(frameRect.height);
                 container.remove();
                 
             });
