@@ -1,20 +1,21 @@
 let startingPoint =[];
 let endingPoint = [];
+let image, scaledImgSizeX, scaledImgSizeY;
 
 function cropImage(img) {
     
     const parent = document.querySelector("main");
     let imgUrl = URL.createObjectURL(img.target.files[0]);
-    let oldImg = new Image();
-    oldImg.src = imgUrl;
-    oldImg.setAttribute("class", "imageToCrop")
+    image = new Image();
+    image.src = imgUrl;
+    image.setAttribute("class", "imageToCrop")
     let container = document.createElement("div");
     container.setAttribute("class", "cropImageDiv");
     alert("kliknij na obrazek raz w miejscu gdzie chcesz zacząć obrys, jeżdżąc myszą góra-dół zmieniasz rozmiar obrysu, drugie kliknięcie zatwierdza, w razie niepowodzenia odśwież stronę, (tak wiem że działa wolno, to jest głupia strona, nie da się szybko)");
-    container.append(oldImg);
+    container.append(image);
     parent.append(container);
 
-    oldImg.addEventListener("click", function(e) {
+    image.addEventListener("click", function(e) {
 
         let imgRect = this.getBoundingClientRect();
         let imgX = Math.floor(imgRect.left);
@@ -24,18 +25,19 @@ function cropImage(img) {
         let div = document.createElement("div");
         let frameW = 168;
         let frameH = 202;
+        scaledImgSizeX = imgRect.width;
+        scaledImgSizeY = imgRect.height;
         
 
         function createFrame(event) {
 
             let frameRect = div.getBoundingClientRect();
-            div.style.width = `${Math.abs(startingPoint[1]-event.clientY)*(frameW/frameH)}px`;
-            div.style.height = `${Math.abs(startingPoint[1]-event.clientY)}px`;
+            div.style.width = `${Math.abs(startingPoint[1]-event.clientY+imgY)*(frameW/frameH)}px`;
+            div.style.height = `${Math.abs(startingPoint[1]-event.clientY+imgY)}px`;
             
-            console.log(frameRect.width, frameRect.height);
 
-            endingPoint[0] = Math.floor(event.clientX);
-            endingPoint[1] = Math.floor(event.clientY);
+            endingPoint[0] = Math.floor(event.clientX+imgX);
+            endingPoint[1] = Math.floor(event.clientY+imgY);
 
             parent.addEventListener("click", function() {
 
@@ -51,10 +53,8 @@ function cropImage(img) {
 
         if (startingPoint.length == 0) {
 
-            startingPoint[0] = mouseX;
-            startingPoint[1] = mouseY;
-            startingPoint[2] = imgX;
-            startingPoint[3] = imgY;
+            startingPoint[0] = mouseX-imgX;
+            startingPoint[1] = mouseY-imgY;
 
             endingPoint = [startingPoint];
             
@@ -72,7 +72,7 @@ function cropImage(img) {
     });
 }
 
-function insertToCanvas(context, arr, img) {
+function insertToCanvas(context, arr) {
 
     context.lineWidth = 4;
     context.font = "38px Arial"
@@ -215,16 +215,14 @@ function insertToCanvas(context, arr, img) {
 
     // OBRAZ
 
-    let imgOb = new Image(168, 202);
-    imgOb.src = URL.createObjectURL(img);
-    imgOb.onload = function() {
-        
-        let imgX = imgOb.width;
-        let imgY = imgOb.height;
-        context.drawImage(imgOb, startingPoint[0], startingPoint[1], endingPoint[0], endingPoint[1], 507, 29, 168, 202);
-    }
+    startingPoint[0] = (startingPoint[0] * image.width) / scaledImgSizeX;
+    startingPoint[1] = (startingPoint[1] * image.height) / scaledImgSizeY;
+    endingPoint[0] = (endingPoint[0] * image.width) / scaledImgSizeX;
+    endingPoint[1] = (endingPoint[1] * image.height) / scaledImgSizeY;
+    context.drawImage(image, startingPoint[0], startingPoint[1], endingPoint[0], endingPoint[1], 507, 29, 168, 202);
     
     // KOLOROWY PASEK
+
     context.fillStyle = arr[4].value;
     context.fillRect(478, 245, 915, 23);
     context.fillStyle = "black";
@@ -251,10 +249,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formValues.splice(14, 1)
         formValues.push(document.querySelector("select"));
 
-        formData = new FormData(form);
-        let image = formData.get("photo");
-
-        insertToCanvas(ctx, formValues, image);
+        insertToCanvas(ctx, formValues);
     });
 
     inputPhoto.addEventListener("change", cropImage)
