@@ -113,7 +113,7 @@ function insertToCanvas(context, arr) {
         context.stroke();
 
         context.font = "24px Arial";
-        context.fillText(arr[7].value.trim(), 849, 345, 59);
+        context.fillText(arr[7].value.trim().toUpperCase(), 849, 345, 59);
     }
     
     // JĘZYK
